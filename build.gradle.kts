@@ -13,7 +13,7 @@ plugins {
 
 // TODO petves: Testcontainers + @SpringBootTest med @Commit som visar att allt data är rensat vid exception?
 
-group = "se.lantmateriet.tacodus"
+group = "nu.westlin"
 version = "0.0.1-SNAPSHOT"
 
 java {
