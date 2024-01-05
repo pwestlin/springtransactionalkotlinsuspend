@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/springtx
+    username: springtx
+    password: springtx
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 2
+      #max-lifetime: 180000
+      #idle-timeout: 170000
+  sql:
+    init:
+      mode: never
+
+
+logging:
+  level:
+    #org.springframework.web: DEBUG
+    se.lantmateriet.tacodus.springreactivetx: DEBUG
+    reactor.netty.http.client.HttpClientConnect: ERROR
+    org.springframework.boot.web.embedded.netty.NettyWebServer: INFO
+    org.springframework.jdbc.datasource.DataSourceTransactionManager: TRACE
+    org.springframework.transaction: TRACE
+    org.springframework.transaction.interceptor: TRACE
+    org.springframework.transaction.support: DEBUG
+    org.springframework.transaction.support.AbstractPlatformTransactionManager: DEBUG
+    org.springframework.jdbc.support.JdbcTransactionManager: DEBUG
+    root: WARN
+  file.name: logs/application.log
+  #pattern.level: "%5p [${info.app.name},%X{traceId:-},%X{spanId:-}]"
+  #pattern.level: "%5p "
