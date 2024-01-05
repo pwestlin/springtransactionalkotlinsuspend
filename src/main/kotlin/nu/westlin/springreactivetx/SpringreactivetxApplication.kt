@@ -1,4 +1,4 @@
-package se.lantmateriet.tacodus.springreactivetx
+package nu.westlin.springreactivetx
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking

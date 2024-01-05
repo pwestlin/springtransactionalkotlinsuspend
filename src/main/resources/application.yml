@@ -17,7 +17,7 @@ spring:
 logging:
   level:
     #org.springframework.web: DEBUG
-    se.lantmateriet.tacodus.springreactivetx: DEBUG
+    nu.westlin.springreactivetx: DEBUG
     reactor.netty.http.client.HttpClientConnect: ERROR
     org.springframework.boot.web.embedded.netty.NettyWebServer: INFO
     org.springframework.jdbc.datasource.DataSourceTransactionManager: TRACE

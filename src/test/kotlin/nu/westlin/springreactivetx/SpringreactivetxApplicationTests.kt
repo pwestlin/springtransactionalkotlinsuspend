@@ -1,4 +1,4 @@
-package se.lantmateriet.tacodus.springreactivetx
+package nu.westlin.springreactivetx
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
