@@ -1,1 +1,1 @@
-rootProject.name = "springreactivetx"
+rootProject.name = "springtransactionalkotlinsuspend"
