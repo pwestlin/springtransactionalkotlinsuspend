@@ -32,6 +32,7 @@ private val logger: Logger = LoggerFactory.getLogger(SpringreactivetxApplication
         }
     */
 
+/*
     runApplication<SpringreactivetxApplication>(*args).let { ctx ->
         //logger.debug("ctx.getBean<TransactionManager>() = ${ctx.getBean<TransactionManager>()}")
         try {
@@ -50,6 +51,7 @@ private val logger: Logger = LoggerFactory.getLogger(SpringreactivetxApplication
         logger.info("All person names:\n ${ctx.getBean<PersonRepository>().names()}")
         logger.info("All address citys:\n ${ctx.getBean<AddressRepository>().cities()}")
     }
+*/
 }
 
 data class Person(val id: Long, val name: String)
@@ -122,7 +124,7 @@ class FooService(
     }
 
     @Transactional
-    suspend fun save() {
+    fun save() {
         logger.debug("TransactionSynchronizationManager.isActualTransactionActive() = ${TransactionSynchronizationManager.isActualTransactionActive()}")
         logger.debug("TransactionSynchronizationManager.isSynchronizationActive() = ${TransactionSynchronizationManager.isSynchronizationActive()}")
         logger.debug("TransactionSynchronizationManager.getCurrentTransactionName() = ${TransactionSynchronizationManager.getCurrentTransactionName()}")
@@ -131,6 +133,19 @@ class FooService(
         personRepository.save(person)
         addressRepository.save(address)
         barService.save()
+        throw RuntimeException("Foo")
+    }
+
+    @Transactional
+    suspend fun suspendableSave() {
+        logger.debug("TransactionSynchronizationManager.isActualTransactionActive() = ${TransactionSynchronizationManager.isActualTransactionActive()}")
+        logger.debug("TransactionSynchronizationManager.isSynchronizationActive() = ${TransactionSynchronizationManager.isSynchronizationActive()}")
+        logger.debug("TransactionSynchronizationManager.getCurrentTransactionName() = ${TransactionSynchronizationManager.getCurrentTransactionName()}")
+        val person = Person(id = 1, name = "Peter")
+        val address = Address(id = 1, city = "Hedemora", personId = person.id)
+        personRepository.save(person)
+        addressRepository.save(address)
+        barService.saveSuspendable()
         throw RuntimeException("Foo")
     }
 }
@@ -144,14 +159,21 @@ class BarService(
     private val logger: Logger = LoggerFactory.getLogger(this.javaClass)
 
     @Transactional(propagation = Propagation.MANDATORY)
-    suspend fun save() {
+    fun save() {
         logger.debug("TransactionSynchronizationManager.isActualTransactionActive() = ${TransactionSynchronizationManager.isActualTransactionActive()}")
         logger.debug("TransactionSynchronizationManager.isSynchronizationActive() = ${TransactionSynchronizationManager.isSynchronizationActive()}")
         logger.debug("TransactionSynchronizationManager.getCurrentTransactionName() = ${TransactionSynchronizationManager.getCurrentTransactionName()}")
 
         personRepository.save(Person(id = 9249, name = "Mabel Howard"))
+    }
 
-        // Do nothing
+    @Transactional(propagation = Propagation.MANDATORY)
+    suspend fun saveSuspendable() {
+        logger.debug("TransactionSynchronizationManager.isActualTransactionActive() = ${TransactionSynchronizationManager.isActualTransactionActive()}")
+        logger.debug("TransactionSynchronizationManager.isSynchronizationActive() = ${TransactionSynchronizationManager.isSynchronizationActive()}")
+        logger.debug("TransactionSynchronizationManager.getCurrentTransactionName() = ${TransactionSynchronizationManager.getCurrentTransactionName()}")
+
+        personRepository.save(Person(id = 9249, name = "Mabel Howard"))
     }
 }
 
